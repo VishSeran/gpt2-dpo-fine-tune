@@ -62,7 +62,7 @@ jupyter notebook DPO_Fine-Tuning-v1.ipynb
 ## 🧪 Pipeline Overview
 
 ### 1. Model & Tokenizer Setup
-Loads **GPT-2** as the base model and configures the tokenizer with right-side padding — required for stable causal LM training.
+Loads **meta-llama/Llama-3.2-1B-Instruct** as the base model and configures the tokenizer with right-side padding — required for stable causal LM training.
 
 ### 2. Dataset Preparation
 Uses the [`BarraHome/ultrafeedback_binarized`](https://huggingface.co/datasets/BarraHome/ultrafeedback_binarized) dataset. Each record is preprocessed into the required DPO format:
@@ -94,7 +94,7 @@ Configures and runs `DPOTrainer` with:
 - Per-device batch size: `1` (CPU-friendly)
 
 ### 5. Evaluation
-Plots training vs. evaluation loss curves and compares generated outputs between the base GPT-2 and the DPO-tuned model on the same prompt.
+Plots training vs. evaluation loss curves and compares generated outputs between the base meta-llama/Llama-3.2-1B-Instruct and the DPO-tuned model on the same prompt.
 
 ---
 
@@ -125,12 +125,12 @@ Then restart your kernel and use the `BitsAndBytesConfig` block provided in the 
 
 ## 📊 Results
 
-After 5 epochs on 50 training samples, the DPO-tuned model produces more concise and on-topic responses compared to the base GPT-2:
+After 5 epochs on 50 training samples, the DPO-tuned model produces more concise and on-topic responses compared to the base meta-llama/Llama-3.2-1B-Instruct:
 
 | Model | Response to *"Is higher octane gasoline better for your car?"* |
 |---|---|
-| GPT-2 (base) | Generic, off-topic continuation |
-| GPT-2 (DPO-tuned) | More direct, preference-aligned response |
+| meta-llama/Llama-3.2-1B-Instruct (base) | Generic, off-topic continuation |
+| meta-llama/Llama-3.2-1B-Instruct (DPO-tuned) | More direct, preference-aligned response |
 
 > **Note:** Results are illustrative due to the small dataset size used in this notebook. For meaningful alignment, scale to 10K+ preference pairs.
 
@@ -138,7 +138,6 @@ After 5 epochs on 50 training samples, the DPO-tuned model produces more concise
 
 ## ⚠️ Known Limitations
 
-- **GPT-2 is a toy model** for alignment purposes. For real-world use, replace with `mistralai/Mistral-7B-Instruct-v0.2`, `meta-llama/Llama-3-8B-Instruct`, or similar.
 - **50 training samples** is insufficient for production alignment — used here for CPU/resource compatibility only.
 - No reward margin or win-rate metrics are tracked; add these for rigorous evaluation.
 
